@@ -1,0 +1,50 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Board Modify Page</h1>
+	<img alt="" src="/_fileUpload/${bvo.imageFile}">
+	<button id="imageDeleteBtn">이미지 삭제</button>
+	<form action="/brd/update" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="bno" value="${bvo.bno}">
+		<input type="hidden" name="imageFile" value="${bvo.imageFile}">
+		<table>
+			<tr>
+				<th>no.</th>
+				<td>${bvo.bno}</td>
+			</tr>
+			<tr>
+				<th>title</th>
+				<td><input type="text" name="title" value="${bvo.title}"></td>
+			</tr>
+			<tr>
+				<th>writer</th>
+				<td><input type="text" name="writer" value="${bvo.writer}" readonly></td>
+				<%-- readonly : 서버로 해당 값이 넘어감 / disabled : 서버로 넘어가지 않음 --%>
+			</tr>
+			<tr>
+				<th>regdate</th>
+				<td>${bvo.regdate}</td>
+			</tr>
+			<tr>
+				<th>content</th>
+				<td><textarea rows="15" cols="40" name="content">${bvo.content}</textarea></td>
+			</tr>
+			<tr>
+				<th>imageFile</th>
+				<td> <input type="file" name="newFile"> </td>
+			</tr>
+		</table>
+		<button type="submit">update</button>
+		<button type="reset">reset</button>
+		<a href="/brd/list">
+			<button type="button">go to list</button>
+		</a>
+	</form>
+</body>
+</html>

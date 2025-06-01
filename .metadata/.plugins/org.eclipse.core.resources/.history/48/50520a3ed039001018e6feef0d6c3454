@@ -1,0 +1,44 @@
+package domain;
+
+public class PagingVO {
+	// 페이지 처리를 위해 DB에서 필요한 객체를 만들어줌
+	// 전체 게시글에서 0번지부터 10개의 값을 출력
+	// select * from board order by bno desc limit 0, 10;
+	// limit 번지, 갯수
+	// 번지는 0번지부터 시작 => 계산해서 리턴
+	
+	private int pageNo; // 페이지 번호 (하단 페이지네이션 값)
+	private int qty; // 한 페이지에 표시되는 게시글 수(10개)
+	
+	public PagingVO() {
+		// 페이징의 값이 없다면 무조건 1페이지
+		this.pageNo = 1;
+		this.qty = 10;
+	}
+
+	public PagingVO(int pageNo, int qty) {
+		this.pageNo = pageNo;
+		this.qty = qty;
+	}
+
+	@Override
+	public String toString() {
+		return "PagingVO [pageNo=" + pageNo + ", qty=" + qty + "]";
+	}
+
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+
+	public int getQty() {
+		return qty;
+	}
+
+	public void setQty(int qty) {
+		this.qty = qty;
+	}
+}

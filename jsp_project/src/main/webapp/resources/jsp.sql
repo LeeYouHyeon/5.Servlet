@@ -1,0 +1,56 @@
+-- 2025-05-22 : 게시판 DB(jspdb)
+
+-- 유저 생성 : jspuser / mysql
+create user 'jspuser'@'localhost' identified by 'mysql';
+
+-- jspdb 데이터베이스 생성
+create database jspdb;
+use jspdb;
+
+-- jspuser에 권한 부여
+grant all privileges on jspdb.* to 'jspuser'@'localhost';
+flush privileges;
+
+-- board 테이블 생성
+create table board(
+bno int auto_increment,
+title varchar(100) not null,
+writer varchar(50) not null,
+content text,
+regdate datetime default now(),
+moddate datetime default now(),
+primary key(bno)
+);
+
+-- 더미 데이터 생성
+insert into board(title, writer, content) values
+('test1', 'tester', '111'),
+('test1', 'tester', '333'),
+('test1', 'tester', '777'),
+('test1', 'tester', '444'),
+('test1', 'tester', '999');
+-- 100개 정도?
+
+-- comment
+-- 2025-05-23
+create table comment(
+cno int auto_increment,
+bno int not null,
+writer varchar(50) not null,
+content varchar(1000) not null,
+regdate datetime default now(),
+primary key(cno));
+--2025-05-26
+alter table board add imageFile varchar(300);
+
+-- member
+-- 2025-05-28
+create table member(
+id varchar(50) not null,
+pwd varchar(100) not null,
+email varchar(100) not null,
+phone varchar(50),
+regdate datetime default now(),
+lastlogin datetime default now(),
+primary key(id)
+);

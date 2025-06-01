@@ -1,0 +1,21 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>회원가입 페이지</h1>
+	<form action="/mem/insert" method="post">
+		id : <input type="text" id="id" name="id" placeholder="아이디 입력" required> <br>
+		<button id="idCheck">중복체크</button> <div id="idCheckResult"></div> <br>
+		pwd : <input type="password" name="pwd" placeholder="비밀번호 입력" required> <br>
+		email : <input type="text" name="email" placeholder="이메일 입력" required> <br>
+		phone : <input type="text" name="phone" placeholder="하이픈 제외"> <br>
+		<button type="submit" id="submit" disabled>join</button>
+	</form>
+	<script type="text/javascript" src="/resources/idCheck.js"></script>
+</body>
+</html>

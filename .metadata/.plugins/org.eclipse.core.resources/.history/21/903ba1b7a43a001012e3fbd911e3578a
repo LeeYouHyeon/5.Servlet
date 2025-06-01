@@ -1,0 +1,5 @@
+package handler;
+
+public class FileRemoveHandler {
+	private static final Logger Log = LoggerFactory.getLogger(FileRemoveHandler.class);
+}

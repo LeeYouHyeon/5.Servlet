@@ -1,0 +1,10 @@
+package handler;
+
+public class PagingHandler {
+	// DB에서는 필요하지 않지만 화면에서 처리가 필요한 경우
+	// DB에서 필요한 객체는 domain => VO
+	
+	// paging 처리는 화면에서 필요한 내용(페이지네이션 값) => PagingHandler.class
+	// DB 처리에 필요한 내용(limit, 번지, 갯수) => PagingVO.class
+	
+}

@@ -1,0 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<a href="/index.jsp">
+		<button>Go to main</button>
+	</a>
+
+	<h1>members</h1>
+	<table>
+		<tr>
+			<th>id</th>
+			<th>email</th>
+			<th>phone</th>
+			<th>regdate</th>
+			<th>lastlogin</th>
+		</tr>
+		<c:forEach items="${list}" var="mem">
+			<tr>
+				<td>${mem.id}</td>
+				<td>${mem.email}</td>
+				<td>${mem.phone}</td>
+				<td>${mem.regdate}</td>
+				<td>${mem.lastlogin}</td>
+			</tr>
+		</c:forEach>
+	</table>
+
+	<%-- paging line --%>
+	<div>
+		<c:if test="${ph.prev}">
+			<a href="list?pageNo=${ph.startPage - 1}&qty=${ph.pgvo.qty}"> ◀ </a>
+		</c:if>
+		<c:forEach begin="${ph.startPage}" end="${ph.endPage}" var="i">
+			<a href="list?pageNo=${i}&qty=${ph.pgvo.qty}">${i}</a>
+		</c:forEach>
+		<c:if test="${ph.next}">
+			<a href="list?pageNo=${ph.endPage + 1}&qty=${ph.pgvo.qty}"> ▶ </a>
+		</c:if>
+	</div>
+</body>
+</html>

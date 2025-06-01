@@ -1,0 +1,11 @@
+package repository;
+
+import domain.MemberVO;
+
+public interface MemberDAO {
+	int countID(String id);
+
+	int insert(MemberVO mvo);
+
+
+}

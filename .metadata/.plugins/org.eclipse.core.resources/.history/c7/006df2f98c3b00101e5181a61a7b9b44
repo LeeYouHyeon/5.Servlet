@@ -1,0 +1,21 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>회원정보 수정</h1>
+	<form action="/mem/modify" method="post">
+		id : <input type="text" name="id" value="${mem.id}" readonly>
+		<br>
+		email : <input type="text" name="email" value="${mem.email}" required> <br>
+		phone : <input type="text" name="phone" value="${mem.phone}" placeholder="하이픈 제외"> <br>
+		<input type="checkbox" id="changePW"> 비밀번호 수정
+		
+		<button type="submit" id="submit">join</button>
+	</form>
+</body>
+</html>

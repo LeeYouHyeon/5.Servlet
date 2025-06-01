@@ -1,0 +1,138 @@
+console.log("boardDetail.js in");
+console.log(bnoValue);
+
+// 댓글 등록
+document.getElementById('cmtAddBtn').addEventListener('click', () => {
+	const cmtText = document.getElementById('cmtText').value;
+	const cmtWriter = document.getElementById('cmtWriter').value;
+
+	if (cmtText == null || cmtText == '') {
+		alert('댓글을 입력해주세요.');
+		return;
+	}
+
+	let cmtData = {
+		bno: bnoValue,
+		writer: cmtWriter,
+		content: cmtText
+	};
+
+	// 댓글 비동기로 전송
+	postCommentToServer(cmtData).then(result => {
+		console.log(result);
+		alert(result == '1' ? "댓글 등록 성공" : "댓글 등록 실패");
+		/* alert(result == '1' ? '댓글이 등록되었습니다.' : '댓글 등록 실패'); */
+		printCommentList(cmtData.bno);
+	});
+});
+
+// 댓글 등록 비동기
+async function postCommentToServer(cmtData) {
+	try {
+		// 보낼 때 JSON. url, headers(contentType), body(cmtData)
+		const url = "/cmt/post";
+		const config = {
+			method: 'post',
+			headers: {
+				'content-Type': 'application/json; charset=utf-8'
+			},
+			body: JSON.stringify(cmtData)
+		};
+		const resp = await fetch(url, config);
+		const result = await resp.text(); // isOk 값을 리턴
+		return result;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+// 댓글 리스트 요청 비동기
+async function getCommentListFromServer(bno) {
+	try {
+		const resp = await fetch("/cmt/list?bno=" + bno);
+		const result = await resp.json(); // 댓글 리스트([{...}, {...}, {...}, ...])
+		return result;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+function printCommentList(bno) {
+	getCommentListFromServer(bno).then(result => {
+		console.log(result);
+		const div = document.getElementById('commentLine');
+		if (result.length == 0) {
+			div.innerHTML = '<div>댓글이 없습니다.</div>';
+			return;
+		}
+
+		let str = "";
+		for (const cmt of result) {
+			str += '<div>';
+			str += `<div>${cmt.cno}. ${cmt.writer}(${cmt.regdate})</div>`;
+			str += `<div class="111">`;
+			str += `<button type="button" data-cno=${cmt.cno} class="mod">수정</button>`;
+			str += `<button type="button" data-cno=${cmt.cno} class="del">삭제</button>`;
+			str += `<input type="text" value="${cmt.content}" data-cno=${cmt.cno} class="cmtText">`;
+			str += '</div></div>';
+		}
+		div.innerHTML = str;
+	});
+}
+
+// 댓글 수정 비동기
+async function updateCommentToServer(cmtData) {
+	const config = {
+		method: 'post',
+		headers: {
+			'content-Type': 'application/json; charset=utf-8'
+		},
+		body: JSON.stringify(cmtData)
+	};
+
+	return await fetch("/cmt/modify", config).then(resp => resp.text()).catch(console.log);
+}
+
+// 댓글 삭제 비동기
+async function deleteCommentFromServer(cno) {
+	return await fetch("/cmt/remove?cno=" + cno).then(resp => resp.text()).catch(console.log);
+}
+
+document.addEventListener('click', e => {
+	const cno = e.target.dataset.cno;
+	console.log(cno);
+
+	// 수정 버튼일 경우
+	if (e.target.classList.contains('mod')) {
+		// 수정 : cno, content
+		// closest : 내 타겟을 기준으로 나에게 가장 가까운 태그를 찾기
+		let div = e.target.closest('div');
+		console.log(div);
+		let cmtText = div.querySelector('.cmtText').value;
+
+		const cmtData = {
+			cno: cno, content: cmtText
+		};
+
+		console.log(cmtData);
+
+		updateCommentToServer(cmtData).then(resp => {
+			console.log(resp);
+			printCommentList(bnoValue);
+		}).catch(console.log);
+	}
+
+	// 삭제 버튼일 경우
+	if (e.target.classList.contains('del')) {
+		deleteCommentFromServer(cno).then(resp => {
+			console.log(resp);
+			printCommentList(bnoValue);
+		}).catch(console.log);
+	}
+});
+
+const cmtWriter = document.getElementById('cmtWriter');
+if (sesId != null) {
+	cmtWriter.value = sesId;
+	cmtWriter.readOnly = true;
+}

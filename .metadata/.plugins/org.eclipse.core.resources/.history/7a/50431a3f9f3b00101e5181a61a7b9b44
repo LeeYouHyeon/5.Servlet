@@ -1,0 +1,86 @@
+package repository;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import domain.MemberVO;
+import domain.PagingVO;
+import orm.DatabasesBuilder;
+
+public class MemberDAOImpl implements MemberDAO {
+	private static final Logger Log = LoggerFactory.getLogger(MemberDAOImpl.class);
+
+	// sqlSession 객체 생성
+	private SqlSession sql;
+
+	public MemberDAOImpl() {
+		new DatabasesBuilder();
+		sql = DatabasesBuilder.getFactory().openSession();
+	}
+
+	// namespace = MemberMapper
+
+	@Override
+	public int countID(String id) {
+		// TODO Auto-generated method stub
+		Log.info(">> Member DAO in");
+		return (int) sql.selectOne("MemberMapper.countid", id);
+	}
+
+	@Override
+	public int insert(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		Log.info(">> Member DAO in");
+		int isOk = sql.insert("MemberMapper.add", mvo);
+		if (isOk != 0)
+			sql.commit();
+		return isOk;
+	}
+
+	@Override
+	public MemberVO login(MemberVO mvo) {
+		Log.info(">> Member DAO in");
+		return sql.selectOne("MemberMapper.login", mvo);
+	}
+
+	@Override
+	public int lastloginUpdate(String id) {
+		// TODO Auto-generated method stub
+		Log.info(">>> Member DAO in");
+		int isOk = sql.update("MemberMapper.last", id);
+		if (isOk > 0)
+			sql.commit();
+		return isOk;
+	}
+
+	@Override
+	public List<MemberVO> getList(PagingVO pgvo) {
+		Log.info(">>> Member DAO in");
+		return sql.selectList("MemberMapper.list", pgvo);
+	}
+
+	@Override
+	public int getTotal(PagingVO pgvo) {
+		Log.info(">>> Member DAO in");
+		return sql.selectOne("MemberMapper.count", pgvo);
+	}
+
+	@Override
+	public int updateInfo(MemberVO mvo) {
+		Log.info(">>> Member DAO in");
+		int isOk = sql.update("MemberMapper.info", mvo);
+		if (isOk > 0) sql.commit();
+		return isOk;
+	}
+
+	@Override
+	public int remove(String id) {
+		Log.info(">>> Member DAO in");
+		int isOk = sql.delete("Membermapper.del", id);
+		if (isOk > 0) sql.commit();
+		return isOk;
+	}
+}

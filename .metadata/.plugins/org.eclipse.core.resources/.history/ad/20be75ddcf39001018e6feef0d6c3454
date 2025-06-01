@@ -1,0 +1,6 @@
+package domain;
+
+public class PagingVO {
+	// 페이지 처리를 위해 DB에서 필요한 객체를 만들어줌
+	
+}

@@ -1,0 +1,27 @@
+package repository;
+
+import java.util.HashMap;
+import java.util.List;
+
+import domain.BoardVO;
+import domain.PagingVO;
+
+public interface BoardDAO {
+
+	int insert(BoardVO bvo);
+
+	List<BoardVO> getList(PagingVO pgvo);
+
+	BoardVO getDetail(int bno);
+
+	int update(BoardVO bvo);
+
+	int remove(int bno);
+
+	int getTotal(PagingVO pgvo);
+
+	List<BoardVO> getList(HashMap<String, Object> map);
+
+	int getTotal(HashMap<String, Object> map);
+
+}

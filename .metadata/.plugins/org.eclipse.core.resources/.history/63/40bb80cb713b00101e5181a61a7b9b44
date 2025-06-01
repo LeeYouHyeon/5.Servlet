@@ -1,0 +1,11 @@
+package service;
+
+import domain.MemberVO;
+
+public interface MemberService {
+
+	int insert(MemberVO mvo);
+
+	int countID(String id);
+
+}

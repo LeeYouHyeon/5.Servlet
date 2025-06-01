@@ -1,0 +1,29 @@
+console.log("idCheck.js in");
+let idCache = '';
+
+document.getElementById('idCheck').addEventListener('click', () => {
+	const id = document.getElementById('idInput').value;
+	
+	if (id == null || id == '' || id == idCache) return;
+	
+	const resultBox = document.getElementById('idCheckResult');
+	const registerBtn = document.getElementById('submit');
+	
+	fetch("/mem/countID?id=" + id).then(resp => resp.text()).then(count => {
+		console.log(count);
+		if (count == 0) {
+			resultBox.innerHTML = "사용 가능합니다.";
+		} else if (count == '-1') {
+			throw new Error();
+		} else {
+			resultBox.innerHTML = '<span color="red">중복된 아이디입니다.</span>';
+		}
+		registerBtn.ariaDisabled = count != 0;
+		
+		idCache = id;
+	}).catch(err => {
+		console.log(err);
+		resultBox.innerHTML = 'Error occured';
+		registerBtn.ariaDisabled = true;
+	});
+});

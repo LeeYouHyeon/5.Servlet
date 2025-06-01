@@ -1,0 +1,19 @@
+package repository;
+
+import java.util.List;
+
+import domain.CommentVO;
+
+public interface CommentDAO {
+	int count(int bno);
+	
+	int post(CommentVO cvo);
+
+	List<CommentVO> selectList(int bno);
+
+	int modify(CommentVO cvo);
+
+	int remove(int cno);
+
+	int removeAll(int bno);
+}

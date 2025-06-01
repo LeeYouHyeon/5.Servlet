@@ -1,0 +1,83 @@
+package service;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import domain.BoardVO;
+import domain.PagingVO;
+import repository.BoardDAO;
+import repository.BoardDAOImpl;
+import repository.CommentDAOImpl;
+
+public class BoardServiceImpl implements BoardService {
+	private static final Logger Log = LoggerFactory.getLogger(BoardServiceImpl.class);
+	private BoardDAO bdao; // BoardDAO 인터페이스 생성
+
+	public BoardServiceImpl() {
+		bdao = new BoardDAOImpl(); // BoardDAO 구현 클래스
+	}
+
+	@Override
+	public int insert(BoardVO bvo) {
+		// TODO Auto-generated method stub
+		Log.info(">> board service in {}", bvo);
+		
+		return bdao.insert(bvo);
+	}
+
+//	@Override
+//	public List<BoardVO> getList() {
+//		// TODO Auto-generated method stub
+//		Log.info(">> board service in list");
+//		
+//		return bdao.getList();
+//	}
+
+	@Override
+	public BoardVO getDetail(int bno) {
+		// TODO Auto-generated method stub
+		Log.info(">> board service in {}", bno);
+		return bdao.getDetail(bno);
+	}
+
+	@Override
+	public int update(BoardVO bvo) {
+		// TODO Auto-generated method stub
+		Log.info(">> board service in update {}", bvo);
+		return bdao.update(bvo);
+	}
+
+	@Override
+	public int remove(int bno) {
+		// TODO Auto-generated method stub
+		Log.info(">> board service in remove {}", bno);
+		if (new CommentDAOImpl().removeAll(bno) > 0) return bdao.remove(bno);
+		else return 0;
+	}
+
+	@Override
+	public List<BoardVO> getList(PagingVO pgvo) {
+		// TODO Auto-generated method stub
+		return bdao.getList(pgvo);
+	}
+
+	@Override
+	public int getTotal(PagingVO pgvo) {
+		// TODO Auto-generated method stub
+		return bdao.getTotal(pgvo);
+	}
+
+	@Override
+	public List<BoardVO> getList(PagingVO pgvo, String id) {
+		// TODO Auto-generated method stub
+		return bdao.getList(pgvo, id);
+	}
+
+	@Override
+	public int getTotal(PagingVO pgvo, String id) {
+		// TODO Auto-generated method stub
+		return bdao.getTotal(pgvo, id);
+	}
+}

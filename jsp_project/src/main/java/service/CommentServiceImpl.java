@@ -1,0 +1,39 @@
+package service;
+
+import java.util.List;
+
+import domain.CommentVO;
+import repository.CommentDAO;
+import repository.CommentDAOImpl;
+
+public class CommentServiceImpl implements CommentService {
+	private CommentDAO cdao;
+
+	public CommentServiceImpl() {
+		cdao = new CommentDAOImpl();
+	}
+
+	@Override
+	public int post(CommentVO cvo) {
+		// TODO Auto-generated method stub
+		return cdao.post(cvo);
+	}
+
+	@Override
+	public List<CommentVO> getList(int bno) {
+		// TODO Auto-generated method stub
+		return cdao.selectList(bno);
+	}
+
+	@Override
+	public int modify(CommentVO cvo) {
+		// TODO Auto-generated method stub
+		return cdao.modify(cvo);
+	}
+
+	@Override
+	public int remove(int cno) {
+		// TODO Auto-generated method stub
+		return cdao.remove(cno);
+	}
+}

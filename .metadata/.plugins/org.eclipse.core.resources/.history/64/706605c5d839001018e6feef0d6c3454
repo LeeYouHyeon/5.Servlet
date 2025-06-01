@@ -1,0 +1,78 @@
+package repository;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import domain.BoardVO;
+import domain.PagingVO;
+import orm.DatabasesBuilder;
+
+public class BoardDAOImpl implements BoardDAO {
+	private static final Logger Log = LoggerFactory.getLogger(BoardDAOImpl.class);
+	
+	//mybatis 라이브러리에서 SqlSession을 통해 구현
+	private SqlSession sql;
+	
+	public BoardDAOImpl() {
+		new DatabasesBuilder();
+		sql = DatabasesBuilder.getFactory().openSession();
+	}
+
+	// 메서드 구현
+	@Override
+	public int insert(BoardVO bvo) {
+		// sql.메서드(namespace.id, 객체)
+		Log.info(">> board dao in");
+		// DB에 저장
+		int isOk = sql.insert("BoardMapper.add", bvo);
+		// insert, update, delete처럼 DB 값 자체가 변경되는 구문은 반드시 commit을 해줘야 반영됨
+		if (isOk > 0) sql.commit();
+		return isOk;
+	}
+
+//	@Override
+//	public List<BoardVO> getList() {
+//		// TODO Auto-generated method stub
+//		Log.info(">> board dao in");
+//		return sql.selectList("BoardMapper.list");
+//	}
+
+	@Override
+	public BoardVO getDetail(int bno) {
+		// TODO Auto-generated method stub
+		Log.info(">> board dao in");
+		
+		return sql.selectOne("BoardMapper.detail", bno);
+	}
+
+	@Override
+	public int update(BoardVO bvo) {
+		// TODO Auto-generated method stub
+		int isOk = sql.update("BoardMapper.up", bvo);
+		if (isOk > 0) sql.commit();
+		return isOk;
+	}
+
+	@Override
+	public int remove(int bno) {
+		// TODO Auto-generated method stub
+		int isOk = sql.delete("BoardMapper.del", bno);
+		if (isOk > 0) sql.commit();
+		return isOk;
+	}
+
+	@Override
+	public List<BoardVO> getList(PagingVO pgvo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getTotal() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}
