@@ -3,7 +3,7 @@
 0. 사용한 개발 언어 및 라이브러리
    1. 언어 : JDK 11
    2. DB : MySQL 8.0.41
-   3. 서버 : Apache Tomcat 9.0
+   3. Servlet Container : Apache Tomcat 9.0
    4. 라이브러리 : https://mvnrepository.com/
       1) MySQL Connector/J 8.0.33 : 자바와 DB 연결. MySQL의 버전과 앞 두 숫자가 같은 것으로 사용
       2) SLF4J API Module 1.7.36, Apache Log4j API 1.7.36, Apache Log4j Core 2.18.0, Apache Log4j Web 2.18.0 : 로그 관련 라이브러리
@@ -13,4 +13,6 @@
       6) Apache Commons Fileupload 1.4, Apache Commons IO 2.11.0, Thumbnailator 0.4.17 : 파일 업로드 관련
 
 1. 프로젝트 개요
-WIP...
+   기초적인 게시판을 예시로 삼아 Servlet과 MVC 패턴을 구현하는 방법을 배우는 프로젝트.
+2. Servlet?
+   WIP...
